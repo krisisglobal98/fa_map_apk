@@ -5,7 +5,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:latlong2/latlong.dart' hide Path;
 
 import '../app.dart';
 import '../core/format.dart';
@@ -248,7 +248,7 @@ class _MapScreenState extends State<MapScreen> {
       for (final p in l.polygons) {
         refPolys.add(Polygon(
           points: p.outer,
-          color: AppColors.green.withOpacity(0.06),
+          color: AppColors.green.withValues(alpha: 0.06),
           borderColor: AppColors.greenDark,
           borderStrokeWidth: 1.5,
           label: p.label,
@@ -273,7 +273,7 @@ class _MapScreenState extends State<MapScreen> {
       if (refLines.isNotEmpty) PolylineLayer(polylines: refLines),
       PolylineLayer(polylines: [
         for (final pts in feats.trackLines.values)
-          if (pts.length > 1) Polyline(points: pts, color: AppColors.orange.withOpacity(0.55), strokeWidth: 3),
+          if (pts.length > 1) Polyline(points: pts, color: AppColors.orange.withValues(alpha: 0.55), strokeWidth: 3),
         if (rec.points.length > 1) Polyline(points: List.of(rec.points), color: AppColors.orange, strokeWidth: 5),
       ]),
       MarkerLayer(markers: [
@@ -290,7 +290,7 @@ class _MapScreenState extends State<MapScreen> {
       ]),
       if (_measure.length >= 3)
         PolygonLayer(polygons: [
-          Polygon(points: _measure, color: AppColors.orange.withOpacity(0.18), borderColor: AppColors.orange, borderStrokeWidth: 2),
+          Polygon(points: _measure, color: AppColors.orange.withValues(alpha: 0.18), borderColor: AppColors.orange, borderStrokeWidth: 2),
         ]),
       if (_measure.length >= 2)
         PolylineLayer(polylines: [Polyline(points: _measure, color: AppColors.orange, strokeWidth: 3)]),
@@ -305,8 +305,8 @@ class _MapScreenState extends State<MapScreen> {
             point: LatLng(pos.latitude, pos.longitude),
             radius: pos.accuracy,
             useRadiusInMeter: true,
-            color: AppColors.blue.withOpacity(0.14),
-            borderColor: AppColors.blue.withOpacity(0.5),
+            color: AppColors.blue.withValues(alpha: 0.14),
+            borderColor: AppColors.blue.withValues(alpha: 0.5),
             borderStrokeWidth: 1,
           ),
         ]),
@@ -782,7 +782,7 @@ class _ConePainter extends CustomPainter {
       ..lineTo(c.dx - 14, c.dy - 30)
       ..arcToPoint(Offset(c.dx + 14, c.dy - 30), radius: const Radius.circular(32))
       ..close();
-    canvas.drawPath(path, Paint()..color = AppColors.blue.withOpacity(0.3));
+    canvas.drawPath(path, Paint()..color = AppColors.blue.withValues(alpha: 0.3));
   }
 
   @override

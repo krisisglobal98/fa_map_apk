@@ -299,7 +299,7 @@ class _FeatureFormScreenState extends State<FeatureFormScreen> {
       case FieldType.choice:
         return DropdownButtonFormField<String>(
           key: ValueKey('${_type.id}-${f.key}'),
-          value: _choice[f.key],
+          initialValue: _choice[f.key],
           decoration: InputDecoration(labelText: label),
           items: [for (final o in f.options) DropdownMenuItem(value: o, child: Text(o))],
           onChanged: (v) => setState(() => _choice[f.key] = v),

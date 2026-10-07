@@ -72,7 +72,7 @@ class ExportService {
         'dibuat': f.createdAt.toIso8601String(),
         ...f.attributes.map((k, v) => MapEntry(k, '$v')),
       };
-      data.forEach((k, v) => b.writeln('<Data name="${_esc(k)}"><value>${_esc('$v')}</value></Data>'));
+      data.forEach((k, v) => b.writeln('<Data name="${_esc(k)}"><value>${_esc(v)}</value></Data>'));
       b.writeln('</ExtendedData><Point><coordinates>${f.point.longitude},${f.point.latitude},0</coordinates></Point></Placemark>');
     }
     tracks.forEach((t, pts) {
