@@ -23,7 +23,7 @@ dependencies:
   sqflite: ^2.3.3+1            # SQLite (BSD-2) - data lapangan & pembaca MBTiles
   path: ^1.9.0
   path_provider: ^2.1.4
-  file_picker: ^8.1.2          # pilih file GeoTIFF / MBTiles / GeoJSON dari HP
+  file_selector: ^1.0.3        # pilih file GeoTIFF / MBTiles / GeoJSON dari HP (paket resmi Flutter)
 
   # Lokasi
   geolocator: ^13.0.1          # GPS + foreground service Android (MIT)

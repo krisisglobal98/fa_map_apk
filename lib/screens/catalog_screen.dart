@@ -1,5 +1,7 @@
-import 'package:file_picker/file_picker.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 import '../app.dart';
 import '../core/format.dart';
@@ -14,11 +16,16 @@ class CatalogScreen extends StatelessWidget {
   final VoidCallback onShowMap;
 
   Future<void> _import(BuildContext context) async {
-    final res = await FilePicker.platform.pickFiles(type: FileType.any, withData: false);
-    final path = res?.files.single.path;
-    if (path == null) return;
+    // Tanpa filter jenis: Android tidak mengenal MIME .tif/.mbtiles secara konsisten.
+    final XFile? file = await openFile();
+    if (file == null) return;
     if (!context.mounted) return;
-    await _run(context, () => MapRepository.instance.importFile(path));
+    await _run(context, () async {
+      // Salin ke folder sementara dengan nama aslinya, agar ekstensi file terbaca.
+      final tmp = p.join((await getTemporaryDirectory()).path, file.name);
+      await file.saveTo(tmp);
+      return MapRepository.instance.importFile(tmp, displayName: p.basenameWithoutExtension(file.name));
+    });
   }
 
   Future<void> _loadSamples(BuildContext context) async {
